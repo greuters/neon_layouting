@@ -14,7 +14,7 @@ import org.eclipse.scout.rt.client.ui.form.fields.groupbox.AbstractGroupBox;
 import org.eclipse.scout.rt.client.ui.form.fields.tablefield.AbstractTableField;
 import org.eclipse.scout.rt.platform.Order;
 import org.eclipse.scout.rt.platform.extension.InjectFieldTo;
-import org.eclipse.scout.rt.shared.TEXTS;
+import org.eclipse.scout.rt.shared.data.form.AbstractFormData;
 
 @FormData(value = TableFieldFormData.class, sdkCommand = SdkCommand.CREATE)
 public class TableFieldForm extends AbstractDetachableForm {
@@ -23,29 +23,26 @@ public class TableFieldForm extends AbstractDetachableForm {
 	private static String[] LOCATIONS = new String[] { "San Francisco, USA", "Bruehl, Germany", "Täfernstr, Zurich" };
 
 	@Override
-	protected AbstractDetachableForm createFormCopy() {
-		TableFieldForm form = new TableFieldForm();
-		TableFieldFormData formData = new TableFieldFormData();
-		exportFormData(formData);
-		form.importFormData(formData);
-		return form;
+	protected AbstractDetachableForm createNewForm() {
+		return new TableFieldForm();
 	}
 
 	@Override
-	public void initForm() {
-		super.initForm();
+	protected AbstractFormData createNewFormData() {
+		return new TableFieldFormData();
 	}
 
 	public ConfigurationBox.TableField getTableField() {
 		return getFieldByClass(ConfigurationBox.TableField.class);
 	}
 
+	@Order(30.0)
 	@InjectFieldTo(AbstractDetachableForm.MainBox.class)
 	public class ConfigurationBox extends AbstractGroupBox {
 
 		@Override
 		protected String getConfiguredLabel() {
-			return TEXTS.get("Configure");
+			return "Table Box";
 		}
 
 		@Order(10)
@@ -79,7 +76,7 @@ public class TableFieldForm extends AbstractDetachableForm {
 
 			@Override
 			protected String getConfiguredLabel() {
-				return TEXTS.get("TableField");
+				return "Table field";
 			}
 
 			private long getNextId() {
@@ -148,7 +145,7 @@ public class TableFieldForm extends AbstractDetachableForm {
 
 					@Override
 					protected String getConfiguredHeaderText() {
-						return TEXTS.get("Name");
+						return "Name";
 					}
 
 					@Override
@@ -168,7 +165,7 @@ public class TableFieldForm extends AbstractDetachableForm {
 
 					@Override
 					protected String getConfiguredHeaderText() {
-						return TEXTS.get("Location");
+						return "Location";
 					}
 
 					@Override
@@ -180,5 +177,4 @@ public class TableFieldForm extends AbstractDetachableForm {
 			}
 		}
 	}
-
 }

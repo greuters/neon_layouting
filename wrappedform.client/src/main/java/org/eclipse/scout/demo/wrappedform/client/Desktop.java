@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.scout.demo.wrappedform.client.search.SearchOutline;
 import org.eclipse.scout.demo.wrappedform.client.settings.SettingsOutline;
-import org.eclipse.scout.demo.wrappedform.client.ui.forms.WrappingFormFieldForm;
+import org.eclipse.scout.demo.wrappedform.client.ui.forms.WrappedFormFieldForm;
 import org.eclipse.scout.demo.wrappedform.client.work.WorkOutline;
 import org.eclipse.scout.rt.client.session.ClientSessionProvider;
 import org.eclipse.scout.rt.client.ui.action.keystroke.AbstractKeyStroke;
@@ -45,7 +45,7 @@ public class Desktop extends AbstractDesktop {
   
   @Override
   protected void execOpened() {
-	  WrappingFormFieldForm benchForm = new WrappingFormFieldForm();
+	  WrappedFormFieldForm benchForm = new WrappedFormFieldForm();
         benchForm.setDisplayHint(IForm.DISPLAY_HINT_VIEW);
         benchForm.start();
   }

@@ -15,7 +15,8 @@ public class SimpleForm extends AbstractDetachableForm implements IForm {
 	}
 
 	@Override
-	protected AbstractDetachableForm createFormCopy() {
+	protected AbstractDetachableForm createNewForm() {
+		// shallow copy instead of using the default mechanism via formData
 		SimpleForm form = new SimpleForm(getField1().getLabel());
 		form.getField1().setValue(getField1().getValue());
 		return form;

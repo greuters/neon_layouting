@@ -12,17 +12,19 @@ import org.eclipse.scout.rt.client.ui.form.fields.tabbox.AbstractTabBox;
 import org.eclipse.scout.rt.platform.Order;
 import org.eclipse.scout.rt.platform.extension.InjectFieldTo;
 import org.eclipse.scout.rt.shared.ScoutTexts;
+import org.eclipse.scout.rt.shared.data.form.AbstractFormData;
 
 @FormData(value = TabBoxFormData.class, sdkCommand = SdkCommand.CREATE)
 public class TabBoxForm extends AbstractDetachableForm {
 
 	@Override
-	protected AbstractDetachableForm createFormCopy() {
-		TabBoxForm form = new TabBoxForm();
-		TabBoxFormData formData = new TabBoxFormData();
-		exportFormData(formData);
-		form.importFormData(formData);
-		return form;
+	protected AbstractDetachableForm createNewForm() {
+		return new TabBoxForm();
+	}
+
+	@Override
+	protected AbstractFormData createNewFormData() {
+		return new TabBoxFormData();
 	}
 
 	public BookmarksBox getBookmarksBox() {
@@ -37,7 +39,7 @@ public class TabBoxForm extends AbstractDetachableForm {
 		return getFieldByClass(PeopleBox.class);
 	}
 
-	@Order(10)
+	@Order(30.0)
 	@InjectFieldTo(AbstractDetachableForm.MainBox.class)
 	public class TabBox extends AbstractTabBox {
 
@@ -95,10 +97,6 @@ public class TabBoxForm extends AbstractDetachableForm {
 				return getFieldByClass(StationField2.class);
 			}
 
-			public StationField3 getStationField3() {
-				return getFieldByClass(StationField3.class);
-			}
-
 			@Order(10.0)
 			public class StationField1 extends AbstractStringField {
 				@Override
@@ -114,14 +112,6 @@ public class TabBoxForm extends AbstractDetachableForm {
 					return "Station 2";
 				}
 			}
-
-			@Order(30.0)
-			public class StationField3 extends AbstractStringField {
-				@Override
-				protected String getConfiguredLabel() {
-					return "Station 3";
-				}
-			}
 		}
 
 		@Order(30)
@@ -135,6 +125,10 @@ public class TabBoxForm extends AbstractDetachableForm {
 				return getFieldByClass(PersonField1.class);
 			}
 
+			public PersonField2 getPersonField2() {
+				return getFieldByClass(PersonField2.class);
+			}
+
 			@Order(10.0)
 			public class PersonField1 extends AbstractStringField {
 				@Override
@@ -142,6 +136,15 @@ public class TabBoxForm extends AbstractDetachableForm {
 					return "Person 1";
 				}
 			}
+
+			@Order(20.0)
+			public class PersonField2 extends AbstractStringField {
+				@Override
+				protected String getConfiguredLabel() {
+					return "Person 2";
+				}
+			}
 		}
+
 	}
 }
