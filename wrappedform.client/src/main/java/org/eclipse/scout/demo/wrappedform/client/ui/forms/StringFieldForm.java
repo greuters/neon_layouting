@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.eclipse.scout.demo.wrappedform.client.ui.forms;
 
-import org.eclipse.scout.rt.client.ui.form.AbstractForm;
 import org.eclipse.scout.rt.client.ui.form.AbstractFormHandler;
 import org.eclipse.scout.rt.client.ui.form.IForm;
 import org.eclipse.scout.rt.client.ui.form.fields.booleanfield.AbstractBooleanField;
@@ -22,14 +21,20 @@ import org.eclipse.scout.rt.client.ui.form.fields.sequencebox.AbstractSequenceBo
 import org.eclipse.scout.rt.client.ui.form.fields.stringfield.AbstractStringField;
 import org.eclipse.scout.rt.client.ui.messagebox.MessageBoxes;
 import org.eclipse.scout.rt.platform.Order;
+import org.eclipse.scout.rt.platform.Replace;
 import org.eclipse.scout.rt.platform.exception.VetoException;
 import org.eclipse.scout.rt.platform.util.StringUtility;
 import org.eclipse.scout.rt.shared.TEXTS;
 
-public class StringFieldForm extends AbstractForm implements IForm {
+public class StringFieldForm extends AbstractDetachableForm implements IForm {
 
 	public StringFieldForm() {
 		super();
+	}
+
+	@Override
+	protected AbstractDetachableForm createFormCopy() {
+		return new StringFieldForm(); // TODO [sgr]: copy state if necessary
 	}
 
 	@Override
@@ -42,12 +47,10 @@ public class StringFieldForm extends AbstractForm implements IForm {
 		return TEXTS.get("StringField");
 	}
 
-	public MainBox getMainBox() {
-		return getFieldByClass(MainBox.class);
-	}
+	// TODO [sgr] @InjectFieldTo(AbstractDetachableForm.MainBox.class)
 
-	@Order(10)
-	public class MainBox extends AbstractGroupBox {
+	@Replace
+	public class MainBox extends AbstractDetachableForm.MainBox {
 
 		@Order(10)
 		public class ExamplesBox extends AbstractGroupBox {
@@ -350,6 +353,7 @@ public class StringFieldForm extends AbstractForm implements IForm {
 		}
 
 	}
+
 	public class PageFormHandler extends AbstractFormHandler {
 	}
 }
