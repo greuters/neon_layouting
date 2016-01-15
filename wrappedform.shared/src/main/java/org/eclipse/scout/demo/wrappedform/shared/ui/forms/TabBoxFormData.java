@@ -25,14 +25,6 @@ public class TabBoxFormData extends AbstractDetachableFormData {
 		return getFieldByClass(FavoriteField2.class);
 	}
 
-	public PersonField1 getPersonField1() {
-		return getFieldByClass(PersonField1.class);
-	}
-
-	public PersonField2 getPersonField2() {
-		return getFieldByClass(PersonField2.class);
-	}
-
 	public StationField1 getStationField1() {
 		return getFieldByClass(StationField1.class);
 	}
@@ -54,22 +46,6 @@ public class TabBoxFormData extends AbstractDetachableFormData {
 		private static final long serialVersionUID = 1L;
 
 		public FavoriteField2() {
-		}
-	}
-
-	public static class PersonField1 extends AbstractValueFieldData<String> {
-
-		private static final long serialVersionUID = 1L;
-
-		public PersonField1() {
-		}
-	}
-
-	public static class PersonField2 extends AbstractValueFieldData<String> {
-
-		private static final long serialVersionUID = 1L;
-
-		public PersonField2() {
 		}
 	}
 

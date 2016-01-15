@@ -1,15 +1,18 @@
 package org.eclipse.scout.demo.wrappedform.client.ui.forms;
 
 import org.eclipse.scout.demo.wrappedform.client.ui.forms.TabBoxForm.TabBox.BookmarksBox;
-import org.eclipse.scout.demo.wrappedform.client.ui.forms.TabBoxForm.TabBox.PeopleBox;
+import org.eclipse.scout.demo.wrappedform.client.ui.forms.TabBoxForm.TabBox.DetachableBox;
 import org.eclipse.scout.demo.wrappedform.client.ui.forms.TabBoxForm.TabBox.StationsBox;
 import org.eclipse.scout.demo.wrappedform.shared.ui.forms.TabBoxFormData;
 import org.eclipse.scout.rt.client.dto.FormData;
 import org.eclipse.scout.rt.client.dto.FormData.SdkCommand;
+import org.eclipse.scout.rt.client.ui.form.IForm;
 import org.eclipse.scout.rt.client.ui.form.fields.groupbox.AbstractGroupBox;
 import org.eclipse.scout.rt.client.ui.form.fields.stringfield.AbstractStringField;
 import org.eclipse.scout.rt.client.ui.form.fields.tabbox.AbstractTabBox;
+import org.eclipse.scout.rt.client.ui.form.fields.wrappedform.AbstractWrappedFormField;
 import org.eclipse.scout.rt.platform.Order;
+import org.eclipse.scout.rt.platform.classid.ClassId;
 import org.eclipse.scout.rt.platform.extension.InjectFieldTo;
 import org.eclipse.scout.rt.shared.ScoutTexts;
 import org.eclipse.scout.rt.shared.data.form.AbstractFormData;
@@ -27,6 +30,11 @@ public class TabBoxForm extends AbstractDetachableForm {
 		return new TabBoxFormData();
 	}
 
+	@Override
+	public void initForm() {
+		getDetachableBox().getWrappedFormField().setInnerForm(new SimpleForm("Text in tab"));
+	}
+
 	public BookmarksBox getBookmarksBox() {
 		return getFieldByClass(BookmarksBox.class);
 	}
@@ -35,8 +43,8 @@ public class TabBoxForm extends AbstractDetachableForm {
 		return getFieldByClass(StationsBox.class);
 	}
 
-	public PeopleBox getPeopleBox() {
-		return getFieldByClass(PeopleBox.class);
+	public DetachableBox getDetachableBox() {
+		return getFieldByClass(DetachableBox.class);
 	}
 
 	@Order(30.0)
@@ -115,34 +123,19 @@ public class TabBoxForm extends AbstractDetachableForm {
 		}
 
 		@Order(30)
-		public class PeopleBox extends AbstractSampleBox {
+		public class DetachableBox extends AbstractSampleBox {
 			@Override
 			protected String getConfiguredLabel() {
-				return "People";
+				return "Detachable Tab";
 			}
 
-			public PersonField1 getPersonField1() {
-				return getFieldByClass(PersonField1.class);
-			}
-
-			public PersonField2 getPersonField2() {
-				return getFieldByClass(PersonField2.class);
+			public WrappedFormField getWrappedFormField() {
+				return getFieldByClass(WrappedFormField.class);
 			}
 
 			@Order(10.0)
-			public class PersonField1 extends AbstractStringField {
-				@Override
-				protected String getConfiguredLabel() {
-					return "Person 1";
-				}
-			}
-
-			@Order(20.0)
-			public class PersonField2 extends AbstractStringField {
-				@Override
-				protected String getConfiguredLabel() {
-					return "Person 2";
-				}
+			@ClassId("50b63105-4c66-4fbe-abaa-3bf1ef81a833")
+			public class WrappedFormField extends AbstractWrappedFormField<IForm> {
 			}
 		}
 

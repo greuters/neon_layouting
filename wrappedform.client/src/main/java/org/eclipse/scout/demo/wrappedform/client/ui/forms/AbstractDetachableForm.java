@@ -107,7 +107,6 @@ public abstract class AbstractDetachableForm extends AbstractForm implements IFo
 				form.setDisplayHint(IForm.DISPLAY_HINT_POPUP_WINDOW);
 				form.setAskIfNeedSave(false);
 				form.startPageForm();
-				form.waitFor();
 			}
 		}
 	}
