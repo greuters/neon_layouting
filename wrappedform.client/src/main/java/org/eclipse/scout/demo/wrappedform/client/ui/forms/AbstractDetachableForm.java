@@ -8,8 +8,8 @@ import org.eclipse.scout.rt.client.dto.FormData;
 import org.eclipse.scout.rt.client.ui.form.AbstractForm;
 import org.eclipse.scout.rt.client.ui.form.AbstractFormHandler;
 import org.eclipse.scout.rt.client.ui.form.IForm;
-import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractButton;
 import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractCloseButton;
+import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractLinkButton;
 import org.eclipse.scout.rt.client.ui.form.fields.groupbox.AbstractGroupBox;
 import org.eclipse.scout.rt.platform.Order;
 import org.eclipse.scout.rt.platform.classid.ClassId;
@@ -75,7 +75,7 @@ public abstract class AbstractDetachableForm extends AbstractForm implements IFo
 	}
 
 	public void setDetached(boolean isDetached) {
-		// getCloseButton().setVisible(isDetached); // if this would be the
+		getCloseButton().setVisible(isDetached); // if this would be the
 		// requested behavior, they can just use the close button of the window
 		getOpenInANewWindowButton().setVisible(!isDetached);
 		this.m_isDetached = isDetached;
@@ -92,7 +92,7 @@ public abstract class AbstractDetachableForm extends AbstractForm implements IFo
 
 		@Order(20.0)
 		@ClassId("e15ef4b6-650d-4222-9dbe-8f79914daa7f")
-		public class OpenInANewWindowButton extends AbstractButton {
+		public class OpenInANewWindowButton extends AbstractLinkButton {
 
 			@Override
 			protected String getConfiguredLabel() {

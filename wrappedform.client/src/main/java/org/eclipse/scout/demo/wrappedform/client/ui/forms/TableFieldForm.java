@@ -23,6 +23,13 @@ public class TableFieldForm extends AbstractDetachableForm {
 	private static String[] LOCATIONS = new String[] { "San Francisco, USA", "Bruehl, Germany", "Täfernstr, Zurich" };
 
 	@Override
+	public void initForm() {
+		super.initForm();
+		// TODO [sgr]: is this wanted behaviour?
+		// getTableBox().setLabelVisible(!isDetached());
+	}
+
+	@Override
 	protected AbstractDetachableForm createNewForm() {
 		return new TableFieldForm();
 	}
@@ -32,13 +39,17 @@ public class TableFieldForm extends AbstractDetachableForm {
 		return new TableFieldFormData();
 	}
 
-	public ConfigurationBox.TableField getTableField() {
-		return getFieldByClass(ConfigurationBox.TableField.class);
+	public TableBox.TableField getTableField() {
+		return getFieldByClass(TableBox.TableField.class);
+	}
+
+	public TableBox getTableBox() {
+		return getFieldByClass(TableBox.class);
 	}
 
 	@Order(30.0)
 	@InjectFieldTo(AbstractDetachableForm.MainBox.class)
-	public class ConfigurationBox extends AbstractGroupBox {
+	public class TableBox extends AbstractGroupBox {
 
 		@Override
 		protected String getConfiguredLabel() {
