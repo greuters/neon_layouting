@@ -1,14 +1,14 @@
 package org.eclipse.scout.demo.wrappedform.client.ui.forms;
 
 import org.eclipse.scout.demo.wrappedform.client.ClientSession;
-import org.eclipse.scout.demo.wrappedform.client.ui.forms.AbstractDetachableForm.MainBox.CloseButton;
 import org.eclipse.scout.demo.wrappedform.client.ui.forms.AbstractDetachableForm.MainBox.OpenInANewWindowButton;
 import org.eclipse.scout.demo.wrappedform.shared.ui.forms.AbstractDetachableFormData;
 import org.eclipse.scout.rt.client.dto.FormData;
 import org.eclipse.scout.rt.client.ui.form.AbstractForm;
 import org.eclipse.scout.rt.client.ui.form.AbstractFormHandler;
+import org.eclipse.scout.rt.client.ui.form.FormEvent;
+import org.eclipse.scout.rt.client.ui.form.FormListener;
 import org.eclipse.scout.rt.client.ui.form.IForm;
-import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractCloseButton;
 import org.eclipse.scout.rt.client.ui.form.fields.button.AbstractLinkButton;
 import org.eclipse.scout.rt.client.ui.form.fields.groupbox.AbstractGroupBox;
 import org.eclipse.scout.rt.platform.Order;
@@ -62,10 +62,6 @@ public abstract class AbstractDetachableForm extends AbstractForm implements IFo
 		return getFieldByClass(MainBox.class);
 	}
 
-	public CloseButton getCloseButton() {
-		return getFieldByClass(CloseButton.class);
-	}
-
 	public OpenInANewWindowButton getOpenInANewWindowButton() {
 		return getFieldByClass(OpenInANewWindowButton.class);
 	}
@@ -75,8 +71,6 @@ public abstract class AbstractDetachableForm extends AbstractForm implements IFo
 	}
 
 	public void setDetached(boolean isDetached) {
-		getCloseButton().setVisible(isDetached); // if this would be the
-		// requested behavior, they can just use the close button of the window
 		getOpenInANewWindowButton().setVisible(!isDetached);
 		this.m_isDetached = isDetached;
 	}
@@ -86,11 +80,6 @@ public abstract class AbstractDetachableForm extends AbstractForm implements IFo
 	public class MainBox extends AbstractGroupBox {
 
 		@Order(10.0)
-		@ClassId("720aacdc-2e82-4329-950e-1b11e4b7c810")
-		public class CloseButton extends AbstractCloseButton {
-		}
-
-		@Order(20.0)
 		@ClassId("e15ef4b6-650d-4222-9dbe-8f79914daa7f")
 		public class OpenInANewWindowButton extends AbstractLinkButton {
 
@@ -106,6 +95,19 @@ public abstract class AbstractDetachableForm extends AbstractForm implements IFo
 				form.setDisplayParent(ClientSession.get().getDesktop());
 				form.setDisplayHint(IForm.DISPLAY_HINT_POPUP_WINDOW);
 				form.setAskIfNeedSave(false);
+				form.addFormListener(new FormListener() {
+
+					@Override
+					public void formChanged(FormEvent e) {
+						switch (e.getType()) {
+						case FormEvent.TYPE_CLOSED:
+							System.out.println("could copy state of closed " + form.getClass().getSimpleName());
+						default:
+							// nop
+						}
+
+					}
+				});
 				form.startPageForm();
 			}
 		}
