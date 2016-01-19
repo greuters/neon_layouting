@@ -125,7 +125,7 @@ public class WrappedFormFieldForm extends AbstractForm implements IForm {
 				public class TopLeftSplitBox extends AbstractSplitBox {
 					@Override
 					protected double getConfiguredSplitterPosition() {
-						return 0.25;
+						return 0.2;
 					}
 
 					@Override

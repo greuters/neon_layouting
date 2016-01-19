@@ -1,6 +1,6 @@
 package org.eclipse.scout.demo.wrappedform.client.ui.forms;
 
-import org.eclipse.scout.demo.wrappedform.client.ui.forms.CalendarFieldForm.CalenderBox.CalendarField;
+import org.eclipse.scout.demo.wrappedform.client.ui.forms.CalendarFieldForm.CalendarBox.CalendarField;
 import org.eclipse.scout.demo.wrappedform.shared.ui.forms.CalendarFieldFormData;
 import org.eclipse.scout.rt.client.dto.FormData;
 import org.eclipse.scout.rt.client.dto.FormData.SdkCommand;
@@ -20,6 +20,12 @@ public class CalendarFieldForm extends AbstractDetachableForm implements IForm {
 	}
 
 	@Override
+	public void initForm() {
+		super.initForm();
+		getCalendarBox().setLabelVisible(isDetached());
+	}
+
+	@Override
 	protected AbstractDetachableForm createNewForm() {
 		return new CalendarFieldForm();
 	}
@@ -33,9 +39,13 @@ public class CalendarFieldForm extends AbstractDetachableForm implements IForm {
 		return getFieldByClass(CalendarField.class);
 	}
 
+	public CalendarBox getCalendarBox() {
+		return getFieldByClass(CalendarBox.class);
+	}
+
 	@Order(30.0)
 	@InjectFieldTo(AbstractDetachableForm.MainBox.class)
-	public class CalenderBox extends AbstractGroupBox {
+	public class CalendarBox extends AbstractGroupBox {
 
 		@Override
 		protected String getConfiguredLabel() {

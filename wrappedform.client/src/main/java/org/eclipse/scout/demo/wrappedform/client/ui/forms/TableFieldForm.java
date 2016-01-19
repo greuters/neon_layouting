@@ -25,8 +25,7 @@ public class TableFieldForm extends AbstractDetachableForm {
 	@Override
 	public void initForm() {
 		super.initForm();
-		// TODO [sgr]: is this wanted behaviour?
-		// getTableBox().setLabelVisible(!isDetached());
+		getTableBox().setLabelVisible(isDetached());
 	}
 
 	@Override
