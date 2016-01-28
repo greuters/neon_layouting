@@ -101,7 +101,6 @@
 
      & > .tree-node-control {
       /* adjust control position */
-      margin-left: -@outline-node-control-size - 5px;
       margin-top: -3px;
 
       width: @outline-node-control-size;

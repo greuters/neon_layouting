@@ -117,6 +117,43 @@
   }
 }
 
+.tree-node-icon {
+  display: block;
+  position: absolute;
+  top: auto;
+  left: auto;
+  cursor: pointer;
+
+  /* adjust control position */
+  margin-left: -@tree-node-control-size - 4px;
+  margin-top: -1px;
+
+  width: @tree-node-control-size;
+  height: @tree-node-control-size;
+  line-height: @tree-node-control-size;
+  text-align: center;
+
+  & > .icon {
+    position: relative;
+    vertical-align: middle;
+    display: block;
+    font-size: 18px;
+    height: 18px;
+    line-height: 18px;
+    
+    & > .image-icon {
+      /* Move "a bit" towards the bottom, because the icon would not look centered with the text's baseline otherwise. */
+      top: 2px;
+    }
+   
+    & > .font-icon {
+      /* Move "a bit" towards the top, because the icon would not look centered with the text's baseline otherwise. */
+      top: -1px;
+	  #scout.font-icon();
+    }
+  }
+}
+
 .tree-node-control {
   display: block;
   position: absolute;
@@ -126,7 +163,7 @@
   cursor: pointer;
 
   /* adjust control position */
-  margin-left: -@tree-node-control-size - 2px;
+  margin-left: -(2*@tree-node-control-size) - 8px;
   margin-top: -1px;
 
   /* for good animation, ensure that the control is a square and the icon is centered */
@@ -151,15 +188,15 @@
       /* Move to left because '+' sign is not as wide as 'arrow-down' */
       margin-left: -2px;
     }
-
+    
     .tree-node-control:hover::before {
       color: @hover-color;
     }
   }
 
   .tree-node.expanded > & {
-    /* This "imprecise" angle is a workround for firefox to prevent shifting the div a little when the animation finishes. */
-    /* See https://bugzilla.mozilla.org/show_bug.cgi?id=739176 */
+    /*       This "imprecise" angle is a workround for firefox to prevent shifting the div a little when the animation finishes. */
+    /*       See https://bugzilla.mozilla.org/show_bug.cgi?id=739176 */
     #scout.transform(rotate(89.99deg));
   }
 

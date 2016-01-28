@@ -337,7 +337,7 @@ scout.Tree.prototype._decorateNode = function(node) {
   this._renderNodeFilterAccepted(node);
 
   // TODO [5.2] bsh: More attributes...
-  // iconId
+  $node.iconId = node.iconId;
 
   // If parent node is marked as 'lazy', check if any hidden child nodes remain.
   if (node.parentNode && node.parentNode.$node.hasClass('lazy')) {
@@ -354,10 +354,33 @@ scout.Tree.prototype._decorateNode = function(node) {
   }
 };
 
+// TODO [sgr]: copied from Column.js, refactor once it works
+scout.Tree.prototype._icon = function(iconId) {
+  var cssClass, icon;
+  if (!iconId) {
+    return;
+  }
+  cssClass = 'icon';
+  icon = scout.icons.parseIconId(iconId);
+  if (icon.isFontIcon()) {
+    cssClass += ' font-icon';
+    return '<span class="' + icon.appendCssClass(cssClass) + '">' + icon.iconCharacter + '</span>';
+  } else {
+    cssClass += ' image-icon';
+    return '<img class="' + cssClass + '" src="' + icon.iconUrl + '">';
+  }
+};
+
 scout.Tree.prototype._renderTreeItemControl = function($node) {
   var $control = $node.prependDiv('tree-node-control');
   if (this.checkable) {
     $control.addClass('checkable');
+  }
+
+  var nodeIcon = this._icon($node.iconId) || '';
+  if(nodeIcon) {
+    var $nodeIcon = $node.prependDiv('tree-node-icon');
+    $nodeIcon.append(nodeIcon);
   }
 };
 
