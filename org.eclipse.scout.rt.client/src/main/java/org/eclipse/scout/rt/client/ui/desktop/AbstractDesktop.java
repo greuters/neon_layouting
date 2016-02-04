@@ -1439,6 +1439,15 @@ public abstract class AbstractDesktop extends AbstractPropertyObserver implement
   }
 
   @Override
+  public boolean isNavigationBottomVisible() {
+    return propertySupport.getPropertyBool(PROP_NAVIGATION_BOTTOM_VISIBLE);
+  }
+
+  public void setNavigationBottomVisible(boolean b) {
+    propertySupport.setPropertyBool(PROP_NAVIGATION_BOTTOM_VISIBLE, b);
+  }
+
+  @Override
   public void printDesktop(PrintDevice device, Map<String, Object> parameters) {
     try {
       firePrint(device, parameters);

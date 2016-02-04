@@ -16,6 +16,7 @@ scout.Desktop = function() {
   this._$toolBar; // FIXME awe: uniform naming
   this.$bench;
 
+  this.splitter;
   this.navigation;
   /**
    * outline-content = outline form or table
@@ -35,6 +36,7 @@ scout.Desktop = function() {
   this.messageBoxController;
   this.fileChooserController;
   this.benchVisible = true;
+  this.navigationBottomVisible = true;
   this.suppressSetActiveForm = false;
 };
 scout.inherits(scout.Desktop, scout.BaseDesktop);
@@ -61,6 +63,11 @@ scout.Desktop.prototype._onChildAdapterCreation = function(propertyName, model) 
   }
 };
 
+scout.Desktop.prototype._renderProperties = function() {
+  scout.Desktop.parent.prototype._renderProperties.call(this);
+  this._renderNavigationBottomVisible(this.navigationBottomVisible);
+};
+
 scout.Desktop.prototype._render = function($parent) {
   var hasNavigation = this._hasNavigation();
 
@@ -71,7 +78,7 @@ scout.Desktop.prototype._render = function($parent) {
 
   scout.inspector.applyInfo(this, $parent);
 
-  this.navigation = hasNavigation ? new scout.DesktopNavigation(this) : scout.NullDesktopNavigation;
+  this.navigation = hasNavigation ? new scout.SbbDesktopNavigation(this) : scout.NullDesktopNavigation;
   this.navigation.render($parent);
   //TODO [5.2] cgu: maybe better move to desktop navigation?
   this._installKeyStrokeContextForDesktopViewButtonBar();
@@ -239,6 +246,11 @@ scout.Desktop.prototype._renderToolMenus = function() {
   }
 };
 
+scout.Desktop.prototype._renderNavigationBottomVisible = function(visible) {
+  this.navigation.setNavigationBottomVisible(visible);
+  this.navigationWidthUpdated(this.navigation.$navigationTop.cssWidth());
+};
+
 scout.Desktop.prototype._renderBench = function() {
   if (!this._hasBench()) {
     return;
@@ -303,7 +315,7 @@ scout.Desktop.prototype._createSplitter = function($parent) {
   }
   this.splitter = scout.create('Splitter', {
     parent: this,
-    $anchor: this.navigation.$navigation,
+    $anchor: this.navigation.$navigationTop,
     $root: this.$container,
     maxRatio: 0.5
   });
@@ -381,7 +393,7 @@ scout.Desktop.prototype._onSplitterResizeEnd = function(event) {
     // Set width of navigation to BREADCRUMB_SWITCH_WIDTH, using an animation.
     // While animating, update the desktop layout.
     // At the end of the animation, update the desktop layout, and store the splitter position.
-    this.navigation.$navigation.animate({
+    this.navigation.$navigationTop.animate({
       width: scout.DesktopNavigation.BREADCRUMB_SWITCH_WIDTH
     }, {
       progress: function() {
@@ -631,7 +643,17 @@ scout.Desktop.prototype.navigationWidthUpdated = function(navigationWidth) {
       this._$taskBar.css('left', navigationWidth);
     }
     if (this._hasBench()) {
-      this.$bench.css('left', navigationWidth);
+      // TODO [sgr]: this is hacky; should resize the bench properly, to include all submenus
+      if(this.navigationBottomVisible) {
+        this.$bench.css('left', navigationWidth);
+        this.$bench.css('width', this.$container.width() - navigationWidth);
+        this.splitter.$container.css('height', '100%');
+      } else {
+        this.$bench.css('left', 0);
+        this.$bench.css('width', '100%');
+        var navigationHeight = this.navigation.$navigationTop.css('height');
+        this.splitter.$container.css('height', navigationHeight);
+      }
     }
   }
 };

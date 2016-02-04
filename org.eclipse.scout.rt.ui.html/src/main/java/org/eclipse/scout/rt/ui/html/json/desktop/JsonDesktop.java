@@ -199,6 +199,12 @@ public class JsonDesktop<DESKTOP extends IDesktop> extends AbstractJsonPropertyO
         return getModel().isCacheSplitterPosition();
       }
     });
+    putJsonProperty(new JsonProperty<DESKTOP>(IDesktop.PROP_NAVIGATION_BOTTOM_VISIBLE, model) {
+      @Override
+      protected Boolean modelValue() {
+        return getModel().isNavigationBottomVisible();
+      }
+    });
   }
 
   @Override

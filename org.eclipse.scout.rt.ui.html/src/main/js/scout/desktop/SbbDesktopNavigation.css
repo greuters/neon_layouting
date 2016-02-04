@@ -10,7 +10,7 @@
  ******************************************************************************/
 @view-buttons-height: 50px;
 
-.desktop-navigation-top {
+.desktop-navigation {
   position: relative;
   height: @view-buttons-height;
   width: @size-desktop-navigation;
@@ -22,16 +22,13 @@
   width: @size-desktop-navigation-breadcrumb;
 }
 
-.desktop-navigation-bottom {
-  position: relative;
-  height: calc(~'100%' - @view-buttons-height);
+.navigation-container {
+  position: absolute;
+  left: 0;
+  top: @desktop-taskbar-height;
   width: @size-desktop-navigation;
-  background-color: @navigation-background-color;
-  color: @navigation-color;
-  
-  .is-hidden {
-  	display: none;
-  }
+  height: calc(~'100%' - @view-buttons-height);
+  background-color: @background-color;
 }
 
 .view-buttons {

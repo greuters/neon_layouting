@@ -195,6 +195,11 @@ public class VirtualDesktop implements IDesktop {
    */
 
   @Override
+  public boolean isNavigationBottomVisible() {
+    return true;
+  }
+
+  @Override
   public boolean isTrayVisible() {
     return false;
   }

@@ -104,6 +104,11 @@ public interface IDesktop extends IPropertyObserver, IDisplayParent {
 
   String PROP_THEME = "theme";
 
+  /**
+   * {@link Boolean}
+   */
+  String PROP_NAVIGATION_BOTTOM_VISIBLE = "navigationBottomVisible";
+
   public enum DesktopStyle {
     /**
      * Default desktop style with header, navigation (tree) and bench (forms).
@@ -202,6 +207,11 @@ public interface IDesktop extends IPropertyObserver, IDisplayParent {
    * @return true after desktop was opened and setup in any UI.
    */
   boolean isOpened();
+
+  /**
+   * @return true if navigation container to the right is visible
+   */
+  boolean isNavigationBottomVisible();
 
   /**
    * Returns all Forms which are attached to the given {@link IDisplayParent}. The forms returned are ordered as
