@@ -1,0 +1,90 @@
+/*******************************************************************************
+ * Copyright (c) 2014-2015 BSI Business Systems Integration AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BSI Business Systems Integration AG - initial API and implementation
+ ******************************************************************************/
+@menu-item-height: 39px;
+
+.menu-item {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  color: @text-color;
+  #scout.vertical-align-helper-before();
+
+  & > .key-box {
+    bottom: -3px;
+  }
+
+  &:not(.disabled):hover {
+    color: @hover-color;
+  }
+
+  &.disabled {
+    color: @disabled-color;
+    cursor: default;
+  }
+
+  &.menu-textandicon > .icon {
+    padding-right: 5px;
+  }
+
+  & > .icon,
+  & > .text,
+  & > .submenu-icon {
+    position: relative;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: normal;
+    height: auto;
+  }
+
+  & > .text {
+    /* Make element inline to inherit text-decoration property */
+    display: inline;
+    /* SUPER HACK! */
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  & > .icon {
+    /* Move "a bit" towards the top, because the icon would not look centered with the text's baseline otherwise. */
+    top: -1px;
+
+    &.font-icon {
+      font-size: 18px;
+    }
+
+    &.with-label {
+      margin-right: 8px;
+    }
+  }
+
+  &.disabled > .icon:not(.font-icon) {
+    #scout.vendor(filter, grayscale(100%));
+    opacity: 0.5;
+  }
+
+  & > .submenu-icon {
+    padding-left: 8px;
+
+    &::before {
+      #scout.sub-menu-icon();
+    }
+  }
+
+  &.menu-textandicon > .font-icon {
+    font-size: 16px;
+  }
+
+  &.menu-open {
+    color: @active-color;
+  }
+}

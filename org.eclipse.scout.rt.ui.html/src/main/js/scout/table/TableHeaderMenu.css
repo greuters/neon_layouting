@@ -1,0 +1,363 @@
+/*******************************************************************************
+ * Copyright (c) 2014-2015 BSI Business Systems Integration AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BSI Business Systems Integration AG - initial API and implementation
+ ******************************************************************************/
+.table-header-menu {
+  position: absolute;
+  width: 447px;
+  background-color: @table-header-menu-background-color;
+  padding-bottom: 5px;
+  border: 1px solid @border-color;
+  padding: 10px;
+  white-space: nowrap;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &.down {
+    #scout.drop-shadow;
+  }
+
+  &.up {
+    #scout.drop-shadow(@y: -3px);
+  }
+}
+
+.table-header-menu-actions {
+  display: inline-block;
+}
+
+.table-header-menu-filters {
+  display: inline-block;
+  vertical-align: top;
+  height: 100%;
+  width: 222px;
+  border-left: solid 1px @border-color;
+  padding-left: 10px;
+  margin-left: 10px;
+
+  & > .table-header-menu-group > .form-field {
+    position: relative;
+  }
+}
+
+.table-header-menu-whiter {
+  height: 1px;
+  position: absolute;
+  left: 0px;
+  background-color: @table-header-menu-background-color;
+
+  .table-header-menu.down & {
+    top: -1px;
+  }
+
+  .table-header-menu.up & {
+    bottom: -1px;
+  }
+}
+
+.table-header-menu-group {
+  padding-top: 10px;
+
+  &.first {
+    padding-top: 0;
+  }
+
+  &.buttons {
+    padding-bottom: 35px;
+    &.last {
+      padding-bottom: 29px;
+    }
+  }
+}
+
+.table-header-menu-group-text {
+  #scout.font-text-normal(@font-weight-bold);
+  font-weight:bold;
+  color: @text-color;
+  line-height: 22px;
+  height: 22px;
+  #scout.overflow-ellipsis-nowrap();
+}
+
+.table-header-menu-command {
+  float: left;
+  width: 43px;
+  margin-right: 10px;
+  height: 29px;
+  #scout.font-icon();
+  font-size: 17px;
+  line-height: 29px;
+  color: @icon-color;
+  border: 1px solid @table-header-menu-cmd-border-color;
+  background-color: @control-background-color;
+  cursor: pointer;
+  text-align: center;
+
+  &:focus {
+    border-color: @focus-color;
+    outline: none;
+
+    &::before,
+    &::after {
+      color: @focus-color;
+    }
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &:hover {
+    color: @palette-blue-6;
+    border-color: @palette-blue-6;
+  }
+
+  &.disabled {
+    cursor: default;
+  }
+
+  &::after {
+    position: relative;
+    left: 3px;
+    top: -6px;
+    font-size: 10px;
+    line-height: 10px;
+  }
+
+  &.selected {
+    background-color: @table-header-menu-cmd-active-background-color;
+    border: 1px solid @table-header-menu-cmd-active-border-color;
+
+    &::before,
+    &::after {
+      color: @table-header-menu-cmd-active-color;
+    }
+
+    &:focus {
+      background-color: @control-background-color;
+
+      &::before,
+      &::after {
+        color: @focus-color;
+      }
+    }
+  }
+
+  &.move::before {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  &.move-top::before {
+    content: @icon-angle-double-left;
+  }
+  &.move-up::before {
+    content: @icon-angle-left;
+  }
+  &.move-down::before {
+   content: @icon-angle-right;
+  }
+  &.move-bottom::before {
+    content: @icon-angle-double-right;
+  }
+
+  &.sort-asc::before,
+  &.sort-asc-add::before {
+    content: @icon-long-arrow-up;
+  }
+
+  &.sort-desc::before,
+  &.sort-desc-add::before {
+    content: @icon-long-arrow-down;
+  }
+
+  &.sort-asc-add,
+  &.sort-desc-add {
+    &::after {
+      content: @icon-plus;
+    }
+
+    &.selected::after {
+       content: attr(data-icon);
+    }
+  }
+
+  &.add-column::before {
+    content: @icon-plus;
+  }
+  &.remove-column::before {
+    content: @icon-minus;
+  }
+  &.change-column::before {
+    content: @icon-pencil;
+  }
+
+  &.togglable.selected:hover {
+    border-width: 0;
+
+    &::before {
+      top: -1px;
+      font-size: 17px;
+      line-height: 20px;
+      #scout.font-icon();
+      content: @icon-remove;
+    }
+
+    &::after {
+      content: '';
+    }
+  }
+
+  &.group::before,
+  &.group-add::before {
+    position: relative;
+    top: 0px;
+    font-size: 20px;
+    line-height: 20px;
+    content: @icon-group;
+  }
+
+  &.group-add {
+    &::after {
+      content: @icon-plus;
+    }
+
+    &.selected::after {
+       content: attr(data-icon);
+    }
+  }
+
+  &.aggregation-function {
+    &::before {
+      position: relative;
+      top: 0px;
+      font-size: 20px;
+      line-height: 20px;
+    }
+
+    &.sum::before {
+      content: @icon-sum;
+    }
+
+    &.avg::before {
+      content: @icon-avg;
+    }
+
+    &.max::before {
+      content: @icon-max;
+    }
+
+    &.min::before {
+      content: @icon-min;
+    }
+  }
+
+  &.color-gradient1 {
+    background-image: linear-gradient(to right, @column-background-effect-gradient1-start-background-color, @column-background-effect-gradient1-end-background-color);
+    /* Color used as fallback if browser does not support gradients (ie 9) */
+    background-color: @column-background-effect-gradient1-start-background-color;
+  }
+
+  &.color-gradient2 {
+    background-image: linear-gradient(to right, @column-background-effect-gradient2-start-background-color, @column-background-effect-gradient2-end-background-color);
+    /* Color used as fallback if browser does not support gradients (ie 9) */
+    background-color: @column-background-effect-gradient2-start-background-color;
+  }
+
+  &.color-bar-chart {
+    background-image: linear-gradient(to right, @column-background-effect-bar-chart-background-color 0%, @column-background-effect-bar-chart-background-color  65%, @palette-white 65%, @palette-white 100% );
+  }
+
+  &.color {
+    &.selected {
+      border-width: 2px;
+
+      &.togglable:hover {
+        background-color: @table-header-menu-cmd-active-background-color;
+        background-image: none;
+      }
+    }
+  }
+
+  &.column-add::before {
+    content: @icon-plus;
+  }
+
+  &.column-remove::before {
+    content: @icon-remove;
+  }
+}
+
+.table-header-menu-filter {
+  position:relative;
+  width: 200px;
+  float: left;
+  clear: both;
+  height: 30px;
+  line-height: 30px;
+  cursor: pointer;
+  padding: 0px 20px 0px 8px;
+  #scout.overflow-ellipsis-nowrap();
+  border-top: 1px solid @table-header-menu-cmd-border-color;
+
+  &.last {
+    border-bottom: 1px solid @table-header-menu-cmd-border-color;
+  }
+
+  &:hover {
+    color: @hover-color;
+  }
+
+  &::after {
+    position: absolute;
+    right: 14px;
+    content: attr(data-value);
+  }
+
+  &.selected {
+    background-color: @table-header-menu-cmd-active-background-color;
+    border-top-color: @table-header-menu-cmd-active-border-color;
+    color: @table-header-menu-cmd-active-color;
+  }
+
+  &.selected + .table-header-menu-filter {
+    border-top: 1px solid @table-header-menu-background-color;
+  }
+
+  &.selected:last-child {
+    border-bottom-color: @table-header-menu-cmd-active-border-color;
+  }
+}
+
+.table-header-menu-filter-actions {
+  display: inline;
+  float: right;
+  line-height: 22px;
+}
+
+.table-header-menu-filter-toggle-checked {
+  cursor: pointer;
+  color: @table-header-menu-link-color;
+  display: inline;
+}
+
+/* Filter fields group-box */
+.filter-fields {
+  padding: 0;
+
+  & > .group-box-body {
+    padding: 0;
+
+    & > .form-field > label {
+      margin-left: 0;
+    }
+  }
+}

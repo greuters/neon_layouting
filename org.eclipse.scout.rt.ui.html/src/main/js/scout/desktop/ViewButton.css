@@ -1,0 +1,147 @@
+/*******************************************************************************
+ * Copyright (c) 2014-2015 BSI Business Systems Integration AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BSI Business Systems Integration AG - initial API and implementation
+ ******************************************************************************/
+.view-button-tab {
+  display: inline-block;
+  height: @view-buttons-height;
+  background-color: @view-button-tab-background-color;
+  color: @view-button-tab-color;
+  border-right: solid 1px @border-color;
+  white-space: nowrap;
+  min-width: 60px;
+  position: relative;
+  text-align: center;
+  #scout.vertical-align-helper-before();
+
+  & > .key-box {
+    bottom: 4px;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    &:not(.selected) > .font-icon {
+      color: @hover-color;
+    }
+  }
+
+  &.selected {
+    background-color: @view-button-tab-active-background-color;
+    color: @view-button-tab-active-color;
+
+    &.last {
+      border-right-color: transparent;
+    }
+  }
+
+  &.view-menu-popup-head {
+    position: absolute;
+    background-color: @active-inverted-color;
+    color: @active-color;
+  }
+
+  & > .icon {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    font-size: 20px;
+  }
+
+  & > .arrow-icon {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    background-color: inherit;
+
+    height: 0;
+    width: 0;
+    left: -8px;
+    bottom: -3px;
+
+    /* background */
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 15px;
+      height: 14px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: inherit;
+    }
+
+    /* icon */
+    &::after {
+      #scout.font-icon();
+      font-size: 17px;
+      content: @icon-angle-down;
+      position: absolute;
+      top: -2px;
+      left: 2px;
+    }
+
+    &.menu-open::after {
+      content: @icon-angle-up;
+    }
+  }
+}
+
+.view-menu-popup-body {
+  background-color: @view-menu-popup-background-color;
+  border-right: solid 1px @border-color;
+  border-top: solid 1px @border-color;
+  overflow: hidden;
+}
+
+.view-menu-item {
+  padding: 0px 15px 0px 15px;
+  line-height: @desktop-taskbar-height - 1px;
+  border-top: solid 1px @border-color;
+  cursor: pointer;
+  color: @text-color;
+  font-size: 16px;
+  #scout.overflow-ellipsis-nowrap();
+  position: relative;
+
+  &:first-child {
+    border-top-color: transparent;
+  }
+
+  &:hover {
+    color: @hover-color;
+  }
+
+  &.disabled {
+    color: @disabled-color;
+    cursor: default;
+  }
+
+  &.selected {
+    border-top: 1px solid @item-selection-border-color;
+    background-color: @item-selection-background-color;
+    border-color: @item-selection-border-color;
+  }
+
+  &.selected + .view-menu-item {
+    border-top-color: @item-selection-border-color;
+  }
+
+  &.selected:last-child {
+    border-color: @item-selection-border-color;
+  }
+
+  &:last-child {
+    border-bottom: 1px solid @border-color;
+  }
+
+  & > .key-box {
+    bottom: 4px;
+  }
+}

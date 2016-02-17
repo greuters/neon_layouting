@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2010-2015 BSI Business Systems Integration AG.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+  BSI Business Systems Integration AG - initial API and implementation
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse.scout</groupId>
+    <artifactId>maven_rt_plugin_config-master</artifactId>
+    <version>2.0.3</version>
+    <relativePath></relativePath>
+  </parent>
+
+  <groupId>org.eclipse.scout.rt</groupId>
+  <artifactId>org.eclipse.scout.rt</artifactId>
+  <version>5.2.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>Eclipse Scout RT</name>
+  <description>Eclipse Scout RT</description>
+
+  <prerequisites>
+    <maven>3.2.2</maven>
+  </prerequisites>
+
+  <modules>
+    <module>../org.eclipse.scout.json</module>
+    <module>../org.eclipse.scout.rt.platform</module>
+    <module>../org.eclipse.scout.rt.platform.test</module>
+    <module>../org.eclipse.scout.rt.shared</module>
+    <module>../org.eclipse.scout.rt.shared.test</module>
+    <module>../org.eclipse.scout.rt.server.commons</module>
+    <module>../org.eclipse.scout.rt.server.commons.test</module>
+
+    <module>../org.eclipse.scout.rt.server</module>
+    <module>../org.eclipse.scout.rt.server.test</module>
+    <module>../org.eclipse.scout.rt.server.jms</module>
+    <module>../org.eclipse.scout.rt.server.jaxws</module>
+    <module>../org.eclipse.scout.rt.server.jaxws.test</module>
+    <module>../org.eclipse.scout.rt.server.jdbc</module>
+    <module>../org.eclipse.scout.rt.server.jdbc.test</module>
+
+    <module>../org.eclipse.scout.jaxws.apt</module>
+
+    <module>../org.eclipse.scout.rt.client</module>
+    <module>../org.eclipse.scout.rt.client.test</module>
+    <module>../org.eclipse.scout.rt.client.mobile</module>
+    <module>../org.eclipse.scout.rt.client.mobile.test</module>
+    <module>../org.eclipse.scout.rt.svg.client</module>
+    <module>../org.eclipse.scout.rt.svg.client.test</module>
+
+    <module>../org.eclipse.scout.rt.serverbridge</module>
+
+    <module>../org.eclipse.scout.rt.ui.html</module>
+    <module>../org.eclipse.scout.rt.ui.html.test</module>
+    <module>../org.eclipse.scout.rt.ui.html.scriptprocessor</module>
+    <module>../org.eclipse.scout.rt.ui.html.scriptprocessor.test</module>
+    <module>../org.eclipse.scout.rt.svg.ui.html</module>
+
+    <module>../org.eclipse.scout.dev.jetty</module>
+    <module>../org.eclipse.scout.dev.jetty.test</module>
+    <module>../org.eclipse.scout.dev.jetty.test.affix</module>
+    <module>../org.eclipse.scout.rt-settings</module>
+  </modules>
+
+  <properties>
+    <scout.base.version>5.2.0</scout.base.version>
+    <base.version>${scout.base.version}</base.version>
+    <org.eclipse.scout.rt.version>${project.version}</org.eclipse.scout.rt.version>
+    <jetty.version>9.2.13.v20150730</jetty.version>
+    <slf4j.version>1.7.12</slf4j.version>
+
+    <master_coverage_jacoco_destFile>${basedir}/../org.eclipse.scout.rt/target/jacoco-all.exec</master_coverage_jacoco_destFile>
+    <!-- Sonar properties -->
+    <sonar.branch>releases_5.2.x</sonar.branch>
+    <sonar.jacoco.reportPath>${master_coverage_jacoco_destFile}</sonar.jacoco.reportPath>
+    <sonar.exclusions>**/resources/WebContent/**</sonar.exclusions>
+    <sonar.coverage.exclusions>*.test/**,
+      **/resources/WebContent/**</sonar.coverage.exclusions>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Build Dependencies -->
+      <dependency>
+        <groupId>com.sun.mail</groupId>
+        <artifactId>javax.mail</artifactId>
+        <version>1.5.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jul-to-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-log4j12</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-jdk14</artifactId>
+        <version>${slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-classic</artifactId>
+        <version>1.1.3</version>
+      </dependency>
+      <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+      </dependency>
+      <dependency>
+        <groupId>org.quartz-scheduler</groupId>
+        <artifactId>quartz</artifactId>
+        <version>2.2.2</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jboss</groupId>
+        <artifactId>jandex</artifactId>
+        <version>1.1.0.Final</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-swing</artifactId>
+        <version>1.7</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.json</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.platform</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.platform.test</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.shared</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.shared.test</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.server.commons</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.server</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.server.test</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.server.jms</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.server.jaxws</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.server.jdbc</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.server.jdbc.test</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.client</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.client.test</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.client.mobile</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.svg.client</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.serverbridge</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.jaxws.apt</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.ui.html</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.ui.html.test</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.ui.html.scriptprocessor</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.ui.html.scriptprocessor.test</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.rt.svg.ui.html</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.dev.jetty</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.dev.jetty.test</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.scout.rt</groupId>
+        <artifactId>org.eclipse.scout.dev.jetty.test.affix</artifactId>
+        <version>5.2.0-SNAPSHOT</version>
+      </dependency>
+
+      <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.3.1</version>
+      </dependency>
+
+      <!-- JAX-WS with METRO (not bundled with JRE) -->
+      <dependency>
+        <groupId>com.sun.xml.ws</groupId>
+        <artifactId>jaxws-rt</artifactId>
+        <version>${master_dependency_jaxws_version}</version>
+      </dependency>
+
+      <!-- Build Dependencies (Provided) -->
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.1.0</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.xml.ws</groupId>
+        <artifactId>jaxws-api</artifactId>
+        <version>${master_dependency_jaxws_version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.jms</groupId>
+        <artifactId>jms-api</artifactId>
+        <version>1.1-rev-1</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.yahoo.platform.yui</groupId>
+        <artifactId>yuicompressor</artifactId>
+        <version>2.4.8</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.asual.lesscss</groupId>
+        <artifactId>lesscss-engine</artifactId>
+        <version>1.7.4.bsiR02</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- Test Dependencies -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>1.10.19</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-math</artifactId>
+        <version>2.2</version>
+      </dependency>
+
+      <!-- Dev Dependencies -->
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-webapp</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-annotations</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-plus</artifactId>
+        <version>${jetty.version}</version>
+      </dependency>
+
+      <!-- Transient Dependencies -->
+      <dependency>
+        <groupId>ch.qos.logback</groupId>
+        <artifactId>logback-core</artifactId>
+        <version>1.1.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.unquietcode.tools.jcodemodel</groupId>
+        <artifactId>codemodel</artifactId>
+        <version>1.0.2</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.2</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.activation</groupId>
+        <artifactId>activation</artifactId>
+        <version>1.1</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.annotation</groupId>
+        <artifactId>javax.annotation-api</artifactId>
+        <version>1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.jws</groupId>
+        <artifactId>jsr181-api</artifactId>
+        <version>1.0-MR1</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.2.9</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.xml.soap</groupId>
+        <artifactId>javax.xml.soap-api</artifactId>
+        <version>1.3.5</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-anim</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-awt-util</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-bridge</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-css</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-dom</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-ext</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-gui-util</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-gvt</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-js</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-parser</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-script</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-svg-dom</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-util</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>batik-xml</artifactId>
+        <version>1.7</version>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-core</artifactId>
+        <version>1.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mozilla</groupId>
+        <artifactId>rhino</artifactId>
+        <version>1.7R4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.objenesis</groupId>
+        <artifactId>objenesis</artifactId>
+        <version>2.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ow2.asm</groupId>
+        <artifactId>asm-commons</artifactId>
+        <version>5.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ow2.asm</groupId>
+        <artifactId>asm-tree</artifactId>
+        <version>5.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ow2.asm</groupId>
+        <artifactId>asm</artifactId>
+        <version>5.0.1</version>
+      </dependency>
+      <dependency>
+        <groupId>xalan</groupId>
+        <artifactId>xalan</artifactId>
+        <version>2.7.0</version>
+      </dependency>
+      <dependency>
+        <groupId>xml-apis</groupId>
+        <artifactId>xml-apis-ext</artifactId>
+        <version>1.3.04</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.scout</groupId>
+          <artifactId>eclipse-settings-maven-plugin</artifactId>
+          <dependencies>
+            <dependency>
+              <groupId>org.eclipse.scout.rt</groupId>
+              <artifactId>org.eclipse.scout.rt-settings</artifactId>
+              <version>${project.version}</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-scm-plugin</artifactId>
+        <configuration>
+          <basedir>${project.basedir}/..</basedir>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <inherited>false</inherited>
+        <configuration>
+          <flattenMode>bom</flattenMode>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <id>aggregate</id>
+            <inherited>false</inherited>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <id>aggregate</id>
+            <inherited>false</inherited>
+            <reports>
+              <report>aggregate</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changelog-plugin</artifactId>
+        <reportSets>
+          <reportSet>
+            <id>dual-report</id>
+            <configuration>
+              <displayFileDetailUrl>https://git.eclipse.org/c/scout/org.eclipse.scout.rt.git/tree/%FILE%</displayFileDetailUrl>
+              <displayFileRevDetailUrl>https://git.eclipse.org/c/scout/org.eclipse.scout.rt.git/tree/%FILE%?id=%REV%</displayFileRevDetailUrl>
+              <displayChangeSetDetailUrl>https://git.eclipse.org/c/scout/org.eclipse.scout.rt.git/commit/?id=%REV%</displayChangeSetDetailUrl>
+            </configuration>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+  <url>https://eclipse.org/scout</url>
+
+  <!-- primarily for license header generation -->
+  <inceptionYear>2010</inceptionYear>
+
+  <licenses>
+    <license>
+      <name>Eclipse Public License v1.0</name>
+      <url>http://www.eclipse.org/legal/epl-v10.html</url>
+      <comments>All rights reserved.
+
+       This program and the accompanying materials are made
+       available under the terms of the Eclipse Public License v1.0
+       which accompanies this distribution, and is available at
+       http://www.eclipse.org/legal/epl-v10.htm</comments>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Eclipse Scout Committers</name>
+      <email>scout-dev@eclipse.org</email>
+      <organization>Eclipse</organization>
+      <organizationUrl>https://www.eclipse.org</organizationUrl>
+    </developer>
+  </developers>
+
+  <mailingLists>
+    <mailingList>
+      <name>scout-dev Mailing List</name>
+      <subscribe>https://dev.eclipse.org/mailman/listinfo/scout-dev</subscribe>
+      <unsubscribe>https://dev.eclipse.org/mailman/listinfo/scout-dev</unsubscribe>
+      <post>scout-dev@eclipse.org</post>
+      <archive>http://dev.eclipse.org/mhonarc/lists/scout-dev</archive>
+    </mailingList>
+  </mailingLists>
+
+  <scm>
+    <connection>scm:git:git://git.eclipse.org/gitroot/scout/org.eclipse.scout.rt.git</connection>
+    <developerConnection>scm:git:ssh://${eclipse_gerrit_username}@git.eclipse.org:29418/scout/org.eclipse.scout.rt</developerConnection>
+    <tag>releases/5.2.x</tag>
+    <url>http://git.eclipse.org/c/scout/org.eclipse.scout.rt.git/</url>
+  </scm>
+
+  <issueManagement>
+    <system>Bugzilla</system>
+    <url>https://bugs.eclipse.org/bugs/buglist.cgi?query_format=advanced;product=Scout;classification=Technology</url>
+  </issueManagement>
+
+  <repositories>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>eclipse.release</id>
+      <name>eclipse-release-repo</name>
+      <url>https://repo.eclipse.org/content/groups/releases/</url>
+    </repository>
+    <repository>
+      <snapshots></snapshots>
+      <id>eclipse.snapshot</id>
+      <name>eclipse-snapshot-repo</name>
+      <url>https://repo.eclipse.org/content/groups/snapshots/</url>
+    </repository>
+    <!-- Bintray Repository for com.asual.lesscss:lesscss-engine dependency -->
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>bintray-bsi-business-systems-integration-ag-scout-eclipse-org</id>
+      <name>bintray</name>
+      <url>http://dl.bintray.com/bsi-business-systems-integration-ag/scout-eclipse-org</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>eclipse.release</id>
+      <name>eclipse-release-repo</name>
+      <url>https://repo.eclipse.org/content/groups/releases/</url>
+    </pluginRepository>
+    <pluginRepository>
+      <snapshots></snapshots>
+      <id>eclipse.snapshot</id>
+      <name>eclipse-snapshot-repo</name>
+      <url>https://repo.eclipse.org/content/groups/snapshots/</url>
+    </pluginRepository>
+    <!-- Bintray Repository for test-release of https://github.com/mojohaus/flatten-maven-plugin/pull/13 -->
+    <pluginRepository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>bintray-bsi-business-systems-integration-ag-scout-eclipse-org</id>
+      <name>bintray-plugins</name>
+      <url>http://dl.bintray.com/bsi-business-systems-integration-ag/scout-eclipse-org</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <distributionManagement>
+    <repository>
+      <id>repo.eclipse.org</id>
+      <name>Scout Repository - Releases</name>
+      <url>https://repo.eclipse.org/content/repositories/scout-releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>repo.eclipse.org</id>
+      <name>Scout Repository - Snapshots</name>
+      <url>https://repo.eclipse.org/content/repositories/scout-snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+</project>

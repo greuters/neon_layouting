@@ -1,0 +1,253 @@
+/*******************************************************************************
+ * Copyright (c) 2014-2015 BSI Business Systems Integration AG.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     BSI Business Systems Integration AG - initial API and implementation
+ ******************************************************************************/
+@menubar-height: @logical-grid-height;
+@menu-item-margin-right: 18px;
+
+/* Mixins */
+
+#scout {
+  .menubar-background-color-inherit() {
+    background-color: inherit;
+
+    & > .menu-button.disabled {
+      /* use regular button color since menubar has no color */
+      background-color: @button-disabled-background-color;
+    }
+  }
+
+  /* a transparent main-menubar with a smaller bottom border */
+  .main-menubar-light() {
+    #scout.menubar-background-color-inherit();
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: @bench-padding-x;
+    margin-right: @bench-padding-x;
+  }
+}
+
+/* Styles */
+
+.menubar {
+  position: relative;
+  width: 100%;
+  background-color: @menubar-background-color;
+  display: table;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  /* default style is 'top' */
+  border-bottom: 1px solid @border-color;
+
+  &.bottom {
+    border-bottom: 0;
+    border-top: 1px solid @border-color;
+  }
+
+  /* menubox is either .left or .right */
+  & > .menubox {
+    display: table-cell;
+    vertical-align: middle;
+    white-space: nowrap;
+    #scout.vertical-align-helper-before();
+
+    &.right {
+      text-align: right;
+    }
+
+    & > .menu-separator {
+      position: relative;
+      display: inline-block;
+      vertical-align: middle;
+      width: 1px;
+      margin-right: @menu-item-margin-right;
+      background-color: @border-color;
+      height: 15px;
+    }
+
+    & > .menu-item {
+      /* All menu items need the same height to correctly position the key-boxes. "height: 100%" does not seem to */
+      /* work in FF, probably because the menubar uses displays "table" and "table-cell". This height is also  */
+      /* used when calculating the preferred height of the menubar. */
+      height: 22px;
+      margin-top: 1px;
+      margin-bottom: 1px;
+
+      &:not(.disabled) {
+        color: @menubar-item-color;
+      }
+
+      &:focus {
+        outline: none;
+
+        &:not(.disabled) {
+          color: @hover-color;
+
+          &:not(.menu-button) {
+            color: @focus-color;
+
+            &::after {
+              color: @focus-color;
+            }
+          }
+
+          /* Draw border for icon only items */
+          &.menu-icononly::after {
+            #scout.button-focus();
+          }
+
+          &:not(.menu-icononly):not(.menu-button) > .text {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      &:not(.last) {
+        margin-right: @menu-item-margin-right;
+      }
+
+      /* ---------------------------------- */
+
+      /* FIXME awe: reduce copy/paste --> Button.css */
+      &.menu-button {
+        height: 25px;
+        padding: @button-padding-y @button-padding-x;
+        text-align: center;
+        color: @menubar-button-color;
+        background-color: @menubar-button-background-color;
+        border: 1px solid @menubar-button-border-color;
+        border-radius: @border-radius;
+        min-width: 110px;
+
+        /* FIXME cgu/BSH: Actually, we wanted to use .overflow-ellipsis-nowrap to support */
+        /* ellipsis, but this breaks the focus, because the ::before inline element gets */
+        /* cut off. We should find a better solution for this. */
+        /*white-space: nowrap;*/
+
+        &:not(.disabled):not(.default-menu):hover {
+          color: @button-hover-color;
+
+          & > .font-icon {
+            color:@button-hover-color;
+          }
+        }
+
+        &:not(.disabled):active {
+          color: @button-active-color;
+          background-color: @menubar-button-active-background-color;
+
+          & > .font-icon {
+            color: @button-active-color;
+          }
+        }
+
+        &:focus:not(.disabled)::after {
+          #scout.button-focus();
+        }
+
+        & > .font-icon {
+          color: @menubar-button-font-icon-color;
+        }
+
+        &.default-menu:not(.disabled) {
+          #scout.font-text-normal(@font-weight-bold);
+          background-color: @default-button-background-color;
+          /* border is necessary to align the text with text from buttons with a real border */
+          border-color: transparent;
+          color: @default-button-color;
+
+          &:focus {
+            color: @default-button-color;
+          }
+
+          &:hover {
+            background-color: @default-button-hover-background-color;
+          }
+
+          &:active {
+            background-color: @default-button-active-background-color;
+            border-color: @default-button-active-background-color;
+          }
+
+          & > .font-icon {
+            font-weight: normal;
+            color: @icon-inverted-color;
+          }
+        }
+
+        &.disabled {
+          background-color: @menubar-button-disabled-background-color;
+          border-color: @menubar-button-disabled-border-color;
+          color: @menubar-button-disabled-color;
+          cursor: default;
+
+          & > .font-icon {
+            color: @menubar-button-font-icon-disabled-color;
+          }
+        }
+
+        &.selected {
+          border-style: inset;
+          border-right-color: @border-color;
+          border-bottom-color: @border-color;
+        }
+
+        &:not(.last) {
+          margin-right: @menu-item-margin-right;
+        }
+
+        &.small-gap {
+          margin-right: 6px;
+        }
+
+        &.small {
+          min-width: 53px;
+
+          & > .font-icon {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.main-menubar {
+  padding-left: @bench-padding-x;
+  padding-right: @bench-padding-x; // - @desktop-table-header-menubar-padding-right;
+  height: 52px;
+  background-color: @main-menubar-background-color;
+
+  & > .menubox {
+
+    & > .menu-item {
+      height: @logical-grid-height;
+
+      &.menu-button {
+        height: @logical-grid-height;
+      }
+
+      &:not(.menu-textandicon) > .font-icon {
+        font-size: 22px;
+      }
+
+      &.small > .font-icon {
+        font-size: 18px;
+      }
+
+      &.last {
+        margin-right: 0;
+      }
+    }
+
+    & > .menu-separator {
+      height: @logical-grid-height - 12px;
+    }
+  }
+}
