@@ -561,6 +561,7 @@ scout.Outline.prototype.glassPaneTargets = function() {
 
   var elements = [];
   if (desktop.navigation) {
+    // TODO [sgr]: e.g. here, a hardcoded reference to the default layout structure is made => taking out these references might be difficult to do
     elements.push(desktop.navigation.$container); // navigation container; not available if application has no navigation.
   }
   if (desktop._outlineContent) {
